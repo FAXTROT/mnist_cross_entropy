@@ -63,19 +63,6 @@ for i, val in enumerate(y_test):
 
 y_test = y_temp  
 
-# init weights and etc. USELESS
-
-alpha = 0.001
-
-m, n = x_train.shape
-
-l1 = 30
-l2 = 20
-l3 = 10
-
-w1 = 2*np.random.random([n, l1]) - 1
-w2 = 2*np.random.random([l1, l2]) - 1
-w3 = 2*np.random.random([l2, l3]) - 1
 
 # activation functions and their deriv
 
@@ -94,8 +81,8 @@ alpha = 0.6
 
 m, n = x_train.shape
 
-l1 = 20
-l2 = 20
+l1 = 30
+l2 = 30
 l3 = 10
 
 w1 = 2*np.random.random([n, l1]) - 1
@@ -114,7 +101,7 @@ test_acc = []
 
 print('\n')
 # body
-for i in range(0, 180):      # quantity of epochs = range(0, NUMBER)
+for i in range(0, 100):      # quantity of epochs = range(0, NUMBER)
     iterations.append(i)
     
     # --------------------
@@ -133,7 +120,8 @@ for i in range(0, 180):      # quantity of epochs = range(0, NUMBER)
     for c, val in enumerate(y_test):
         if val[pred[c]] == 1:
             counter += 1
-    test_acc.append(counter*100/y_test.shape[0])
+    test_acc_value = counter*100/y_test.shape[0]
+    test_acc.append(test_acc_value)
     # --------------------
     
     # feed forward
@@ -172,12 +160,14 @@ for i in range(0, 180):      # quantity of epochs = range(0, NUMBER)
             counter += 1
     train_acc.append(counter*100/m)
             
-    if i%20 == 0:
-        print(J)
+    if i%10 == 0:
+        print(f"Iteration No_{i}")
+        print(f"Error : {J}")
         #print(w3)
         #print(b3)
         #print(a3)
-        print(counter*100/m)
+        print(f"Train accuracy : {counter*100/m}")
+        print(f"Test accuracy : {test_acc_value}")
         print('\n')
 
 # plot
@@ -190,6 +180,9 @@ plt.title("Graphic")
 plt.show()
 
 plt.plot(iterations, error, 'r-')
+plt.xlabel("Iterations")
+plt.ylabel("Error value")
+plt.title("Error (J)")
 plt.show()
 
 
